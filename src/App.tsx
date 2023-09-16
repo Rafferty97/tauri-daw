@@ -1,15 +1,16 @@
-import { createSignal } from 'solid-js'
 import logo from './assets/logo.svg'
 import { invoke } from '@tauri-apps/api/tauri'
 import './App.css'
 
 function App() {
-  const [greetMsg, setGreetMsg] = createSignal('')
-  const [name, setName] = createSignal('')
-
-  async function greet() {
+  async function greet(value: string) {
     // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-    setGreetMsg(await invoke('greet', { name: name() }))
+    await invoke('greet', { name: value })
+  }
+
+  async function greet2(value: string) {
+    // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
+    await invoke('greet2', { name: value })
   }
 
   return (
@@ -30,22 +31,21 @@ function App() {
 
       <p>Click on the Tauri, Vite, and Solid logos to learn more.</p>
 
-      <form
-        class="row"
-        onSubmit={e => {
-          e.preventDefault()
-          greet()
-        }}
-      >
-        <input
-          id="greet-input"
-          onChange={e => setName(e.currentTarget.value)}
-          placeholder="Enter a name..."
-        />
-        <button type="submit">Greet</button>
-      </form>
+      <input
+        type="range"
+        min="40"
+        max="20000"
+        value="440"
+        onInput={e => greet(e.currentTarget.value)}
+      />
 
-      <p>{greetMsg()}</p>
+      <input
+        type="range"
+        min="0"
+        max="1000"
+        value="0"
+        onInput={e => greet2(e.currentTarget.value)}
+      />
     </div>
   )
 }
