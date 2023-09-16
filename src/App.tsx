@@ -1,51 +1,63 @@
 import logo from './assets/logo.svg'
 import { invoke } from '@tauri-apps/api/tauri'
 import './App.css'
+import { Dial } from './components/Dial'
+import { createSignal } from 'solid-js'
 
 function App() {
-  async function greet(value: string) {
+  async function greet(value: number) {
     // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
     await invoke('greet', { name: value })
   }
 
-  async function greet2(value: string) {
+  async function greet2(value: number) {
     // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
     await invoke('greet2', { name: value })
   }
 
+  async function greet3(value: number) {
+    // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
+    await invoke('greet3', { name: value })
+  }
+
+  const [freq, setFreq] = createSignal(22000)
+  const [amp, setAmp] = createSignal(0)
+  const [pan, setPan] = createSignal(0)
+
   return (
     <div class="container">
-      <h1>Welcome to Tauri!</h1>
-
-      <div class="row">
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" class="logo vite" alt="Vite logo" />
-        </a>
-        <a href="https://tauri.app" target="_blank">
-          <img src="/tauri.svg" class="logo tauri" alt="Tauri logo" />
-        </a>
-        <a href="https://solidjs.com" target="_blank">
-          <img src={logo} class="logo solid" alt="Solid logo" />
-        </a>
+      <div style={{ display: 'flex' }}>
+        <Dial
+          value={freq()}
+          minValue={10}
+          maxValue={22000}
+          unit="Hz"
+          onInput={value => {
+            setFreq(value)
+            greet(value)
+          }}
+        />
+        <Dial
+          value={amp()}
+          minValue={-60}
+          maxValue={24}
+          unit="dB"
+          onInput={value => {
+            setAmp(value)
+            greet2(value)
+          }}
+        />
+        <Dial
+          value={pan()}
+          minValue={-50}
+          maxValue={50}
+          unit="pan"
+          onInput={value => {
+            setPan(value)
+            greet3(value)
+          }}
+        />
       </div>
-
-      <p>Click on the Tauri, Vite, and Solid logos to learn more.</p>
-
-      <input
-        type="range"
-        min="40"
-        max="20000"
-        value="440"
-        onInput={e => greet(e.currentTarget.value)}
-      />
-
-      <input
-        type="range"
-        min="0"
-        max="1000"
-        value="0"
-        onInput={e => greet2(e.currentTarget.value)}
-      />
     </div>
   )
 }

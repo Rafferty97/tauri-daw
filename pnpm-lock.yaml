@@ -3,17 +3,21 @@ lockfileVersion: 5.4
 specifiers:
   '@tauri-apps/api': ^1.4.0
   '@tauri-apps/cli': ^1.4.0
+  '@types/uuid': ^9.0.4
   solid-js: ^1.7.8
   typescript: ^5.0.2
+  uuid: ^9.0.1
   vite: ^4.4.4
   vite-plugin-solid: ^2.7.0
 
 dependencies:
   '@tauri-apps/api': 1.4.0
   solid-js: 1.7.11
+  uuid: 9.0.1
 
 devDependencies:
   '@tauri-apps/cli': 1.4.0
+  '@types/uuid': 9.0.4
   typescript: 5.2.2
   vite: 4.4.9
   vite-plugin-solid: 2.7.0_solid-js@1.7.11+vite@4.4.9
@@ -717,6 +721,10 @@ packages:
       '@babel/types': 7.22.19
     dev: true
 
+  /@types/uuid/9.0.4:
+    resolution: {integrity: sha512-zAuJWQflfx6dYJM62vna+Sn5aeSWhh3OB+wfUEACNcqUSc0AGc5JKl+ycL1vrH7frGTXhJchYjE1Hak8L819dA==}
+    dev: true
+
   /ansi-styles/3.2.1:
     resolution: {integrity: sha512-VT0ZI6kZRdTh8YyJw3SMbYm/u+NqfsAxEpWO0Pf9sq8/e94WxxOpPKx9FR1FlyCtOVDNOQ+8ntlqFxiRc+r5qA==}
     engines: {node: '>=4'}
@@ -998,6 +1006,11 @@ packages:
       escalade: 3.1.1
       picocolors: 1.0.0
     dev: true
+
+  /uuid/9.0.1:
+    resolution: {integrity: sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==}
+    hasBin: true
+    dev: false
 
   /validate-html-nesting/1.2.2:
     resolution: {integrity: sha512-hGdgQozCsQJMyfK5urgFcWEqsSSrK63Awe0t/IMR0bZ0QMtnuaiHzThW81guu3qx9abLi99NEuiaN6P9gVYsNg==}
