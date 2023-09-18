@@ -4,17 +4,20 @@
 use basedrop::Collector;
 use cpal::traits::{DeviceTrait, HostTrait, StreamTrait};
 use daw_engine::{
-    audio::clip::AudioClip,
+    audio::sample::AudioSample,
     engine::AudioEngine,
     processor::{AudioOutput, Filter, Mixer, Sampler},
 };
 use std::{
     io::BufReader,
-    sync::atomic::{AtomicI64, AtomicU64},
+    sync::{
+        atomic::{AtomicI64, AtomicU64},
+        Arc,
+    },
 };
 
 static FREQ: AtomicU64 = AtomicU64::new(440);
-static AMP: AtomicI64 = AtomicI64::new(22000);
+static AMP: AtomicI64 = AtomicI64::new(10);
 static PAN: AtomicI64 = AtomicI64::new(0);
 
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
@@ -54,12 +57,13 @@ fn play_audio() {
     let collector = Collector::new();
 
     // Create sampler
-    let mut audio_in = Sampler::new();
+    let mut audio_in = Sampler::new_empty();
     let file = std::fs::File::open("123_House.wav").unwrap();
     let reader = BufReader::new(file);
-    let clip = AudioClip::read_wav(reader, None).unwrap();
+    let clip = AudioSample::read_wav(reader, None).unwrap();
     // let clip = clip.trim(0, 22000);
-    audio_in.set_sample(&clip);
+    let clip = Arc::new(clip);
+    audio_in.set_sample(clip);
 
     // Create mixer
     let mixer = Mixer::new();
@@ -74,7 +78,7 @@ fn play_audio() {
     stream.play().unwrap();
 
     // Create a filter effect
-    let mut filter = Filter::new();
+    let filter = Filter::new();
 
     // Create the audio engine
     let mut engine = AudioEngine::new();
